@@ -84,13 +84,13 @@ for fIndex = fStart: (numFiles + fStart - 1);
             end
             
             %determine the coordinate system of the mesh
-            sd4 = textscan(fid, '%s %*s',1, 'headerlines', 2);
+            sd4 = textscan(fid, '%s %*s',1, 'headerlines', 3);
             coorSys = sd4{1};
              
             if strcmpi(coorSys, 'X')==1
                 coorSys = 1; %the coordinate system is cartesian
                 
-            elseif strcmpi(coorSys, 'cylinder') == 1
+            elseif strcmpi(coorSys, 'Cylinder') == 1
                 coorSys = 2; %the coordinate system is cylindrical
                 org = textscan(fid,...
                     '%*s %f %f %f %*s %*s %*s %f %f %f %*s'...
@@ -116,7 +116,7 @@ for fIndex = fStart: (numFiles + fStart - 1);
             %read in number of elements for each variable
             %should be set up so 
             fline1=fgetl(fid);
-            
+            roundn = @(x,n) 10.^n .* round(x/10.^n);
             %sets up array for actaul coordinate positions
             el1 = strread(fline1);
             elem1 = zeros(1,length(el1)-1);
